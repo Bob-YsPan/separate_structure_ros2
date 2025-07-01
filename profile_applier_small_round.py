@@ -12,31 +12,31 @@ class Profile_params():
     nocs_pos_p = 0.0
     nocs_pos_y = 0.0
     # Robot size (Robot body's size) (注意：很多參數會依據機器人身體中心為原點計算)
-    robot_size_x = 0.62
-    robot_size_y = 0.55
-    robot_size_z = 0.625
+    robot_size_x = 0.205
+    robot_size_y = 0.190
+    robot_size_z = 0.110
     # Laser position (Robot body's center --> Laser)
-    laser_pos_x = 0.403
+    laser_pos_x = -0.065
     laser_pos_y = 0.0
-    laser_pos_z = 0.293
+    laser_pos_z = 0.105
     laser_pos_r = 0.0
     laser_pos_p = 0.0
-    laser_pos_yw = 0.0
+    laser_pos_yw = 3.14159
     # IMU position (Robot body's center --> IMU)
-    imu_pos_x = 0.24
-    imu_pos_y = 0.165
-    imu_pos_z = 0.313
+    imu_pos_x = 0.065
+    imu_pos_y = -0.055
+    imu_pos_z = 0.055
     imu_pos_r = 0.0
     imu_pos_p = 0.0
     imu_pos_yw = 0.0
     # Wheel description (Robot body's center --> wheels)
-    wheel_pos_x = 0.21  # X distance between wheel shaft and robot center
-    wheel_pos_z = -0.135  # Z distance between wheel shaft and robot center
-    wheel_separate = 0.283  # Distance between two wheels
-    wheel_diameter = 0.352  # Size of the wheels
-    wheel_thick = 0.08  # Thick of single wheel
+    wheel_pos_x = 0.04  # X distance between wheel shaft and robot center
+    wheel_pos_z = -0.073  # Z distance between wheel shaft and robot center
+    wheel_separate = 0.079  # Distance between two wheels
+    wheel_diameter = 0.064  # Size of the wheels
+    wheel_thick = 0.025  # Thick of single wheel
     # Navigation parameters
-    inflation_radius = 0.55  # The nearest distance of the obstacle
+    inflation_radius = 0.20  # The nearest distance of the obstacle
     map_file = "map.yaml"
     # Auto calculated
     robot_radius = 0.0
