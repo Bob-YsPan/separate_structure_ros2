@@ -11,6 +11,8 @@ import struct
 class BaseBridge():
     # Initialize this class
     def __init__(self):
+        # minimum threshold (rad/s) for motor rotates
+        self.threshold_wheel = 0.45
         # 除錯資料列印
         self.debug_mode = False
         # 接收 buffer
@@ -67,6 +69,15 @@ class BaseBridge():
         # 反解運動學
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
+        # 解算出太小的數值，以最小容許的數值旋轉
+        if (WR < self.threshold_wheel):
+            WR = self.threshold_wheel
+        elif (WR > -1.0 * self.threshold_wheel):
+            WR = -1.0 * self.threshold_wheel
+        if (WL < self.threshold_wheel):
+            WL = self.threshold_wheel
+        elif (WL > -1.0 * self.threshold_wheel):
+            WL = -1.0 * self.threshold_wheel
         # 將資料轉換為32bit浮點數
         WR_send_ba = struct.pack("f", WR)
         WL_send_ba = struct.pack("f", WL)
