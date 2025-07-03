@@ -70,7 +70,7 @@ class BaseBridge():
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
         # 解算出太小的數值，以最小容許的數值旋轉
-        def clamp_to_threshold(value, threshold):
+        def clamp_to_threshold(value, threshold=self.threshold_wheel):
             if abs(value) < threshold:
                 if value > 0:
                     return threshold
