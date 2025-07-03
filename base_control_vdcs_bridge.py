@@ -12,7 +12,7 @@ class BaseBridge():
     # Initialize this class
     def __init__(self):
         # minimum threshold (rad/s) for motor rotates
-        self.threshold_wheel = 0.45
+        self.threshold_wheel = 0.95
         # 除錯資料列印
         self.debug_mode = False
         # 接收 buffer
@@ -67,6 +67,7 @@ class BaseBridge():
     # Function to write speed
     def wrtie_spd(self, vx: float, vrz: float):
         # 反解運動學
+        # Sep = 0.158 Rad = 0.032 vx = 0.03
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
         # 解算出太小的數值，以最小容許的數值旋轉
