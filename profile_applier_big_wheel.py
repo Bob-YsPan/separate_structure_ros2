@@ -23,8 +23,8 @@ class Profile_params():
     laser_pos_p = 0.0
     laser_pos_yw = 0.0
     # IMU position (Robot body's center --> IMU)
-    imu_pos_x = 0.24
-    imu_pos_y = 0.165
+    imu_pos_x = 0.24 - 0.13
+    imu_pos_y = 0.165 - 0.36
     imu_pos_z = 0.313
     imu_pos_r = 0.0
     imu_pos_p = 0.0
@@ -37,8 +37,10 @@ class Profile_params():
     wheel_thick = 0.08  # Thick of single wheel
     # Navigation parameters
     inflation_radius = 0.55  # The nearest distance of the obstacle
-    map_file = "map.yaml"
-    # Auto calculated
+    map_filename = "250703_B02F2.yaml" # Map filename to load
+    max_linear_vel = 0.3     # Max linear velocity (Orig: 0.4)
+    max_angular_vel = 0.4    # Max angular velocity (Orig: 0.75)
+    # Auto calculated (Don't touch)
     robot_radius = 0.0
     wheel_radius = 0.0
     # 在這裡會計算自動更新的參數的數值
@@ -217,6 +219,21 @@ class Profile_updater():
                     "value": self.params.inflation_radius,
                     "name": "inflation_radius (local_costmap)"
                 },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_x'],
+                    "value": self.params.max_linear_vel,
+                    "name": "max_vel_x (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_speed_xy'],
+                    "value": self.params.max_linear_vel,
+                    "name": "max_speed_xy (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_theta'],
+                    "value": self.params.max_angular_vel,
+                    "name": "max_vel_theta (FollowPath)"
+                },
             ]
 
             fail = True
@@ -244,8 +261,8 @@ class Profile_updater():
         except Exception as e:
             print(f"[UPDATER] [ERROR] Got error: {e}")
 
-    # 執行編譯指令
-    def run_colcon_build(self, workspace_path: str, packages: list):
+    # 執行colcon build
+    def colcon_build(self, workspace_path: str, packages: list):
         # Construct the colcon build command
         command = ["colcon", "build"]
         if packages:
@@ -289,10 +306,9 @@ class Profile_updater():
             if process.returncode != 0:
                 print("\n[UPDATER] [ERROR] Process returns error:")
                 print(stderr_output, end='') # Print stderr if command failed
-                return False, stderr_output
             else:
                 print("\n[UPDATER] Command executed successfully.")
-                return True, None
+
         except Exception as e:
             print(f"[UPDATER] [ERROR] Got error: {e}")
             if process and process.stderr:
@@ -300,8 +316,18 @@ class Profile_updater():
                 if stderr_output_on_exception:
                     print("[UPDATER] [ERROR] Got std error: ")
                     print(stderr_output_on_exception, end='')
-                    return False, stderr_output_on_exception
-            return False, str(e)
+
+    # Writes the given map name to the `map_filename.conf` file located in
+    # `linorobot2/linorobot2_navigation/config/`.
+    def write_map_filename(self, file_path: str):
+        map_filename = self.params.map_filename
+        try:
+            with open(file_path, 'w') as f:
+                f.write(map_filename.strip()) # Use strip() to remove any leading/trailing whitespace
+            print(f"[UPDATER] Successfully wrote map name '{map_filename.strip()}' to: {file_path}")
+        except Exception as e:
+            print(f"[UPDATER] [ERROR] Got error: {e}")
+
 
 # 程式進入點
 if __name__ == "__main__":
@@ -313,6 +339,7 @@ if __name__ == "__main__":
     updater.update_imu_properties("../linorobot2/linorobot2_description/urdf/sensors/imu.urdf.xacro")
     # 更新導航屬性檔案
     updater.update_navigation_param("../linorobot2/linorobot2_navigation/config/navigation.yaml")
+    # 更新地圖名稱(放置一個檔案到 linorobot_navigation 的 config 下)
+    updater.write_map_filename("../linorobot2/linorobot2_navigation/config/map_filename.conf")
     # 最後進行編譯
-    updater.run_colcon_build("../../", ["linorobot2_navigation", "linorobot2_description"])
-
+    updater.colcon_build("../../", ["linorobot2_navigation", "linorobot2_description"])
