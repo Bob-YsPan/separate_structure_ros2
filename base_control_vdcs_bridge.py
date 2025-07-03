@@ -1,5 +1,5 @@
 from collections import deque
-from math import floor, abs
+from math import floor
 from select import select
 import socket
 from threading import Thread
