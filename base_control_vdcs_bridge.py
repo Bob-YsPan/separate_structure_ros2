@@ -1,5 +1,5 @@
 from collections import deque
-from math import floor
+from math import floor, abs
 from select import select
 import socket
 from threading import Thread
@@ -70,14 +70,17 @@ class BaseBridge():
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
         # 解算出太小的數值，以最小容許的數值旋轉
-        if (WR < self.threshold_wheel):
-            WR = self.threshold_wheel
-        elif (WR > -1.0 * self.threshold_wheel):
-            WR = -1.0 * self.threshold_wheel
-        if (WL < self.threshold_wheel):
-            WL = self.threshold_wheel
-        elif (WL > -1.0 * self.threshold_wheel):
-            WL = -1.0 * self.threshold_wheel
+        def clamp_to_threshold(value, threshold):
+            if abs(value) < threshold:
+                if value > 0:
+                    return threshold
+                elif value < 0:
+                    return -threshold
+            return value
+        if (abs(WR) < self.threshold_wheel):
+            WR = clamp_to_threshold(WR)
+        if (abs(WL) < self.threshold_wheel):
+            WL = clamp_to_threshold(WL)
         # 將資料轉換為32bit浮點數
         WR_send_ba = struct.pack("f", WR)
         WL_send_ba = struct.pack("f", WL)
