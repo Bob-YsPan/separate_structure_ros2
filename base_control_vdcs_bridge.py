@@ -315,13 +315,17 @@ class BaseBridge():
                 # Finish, back to receive next packet
                 step = 0
 
+    # The entry point can call from others process
+    def start_bridge(self):
+        # Initialize the class and threads
+        base_thread = Thread(target=self.base_control_thread, daemon=True)
+        nocs_thread = Thread(target=self.nocs_comm_thread, daemon=True)
+        base_thread.start()
+        nocs_thread.start()
+        # Join the second thread, don't exit the program
+        nocs_thread.join()
+
 if __name__ == "__main__":
-    # Initialize the class and threads
     base_bridge = BaseBridge()
-    base_thread = Thread(target=base_bridge.base_control_thread, daemon=True)
-    nocs_thread = Thread(target=base_bridge.nocs_comm_thread, daemon=True)
-    base_thread.start()
-    nocs_thread.start()
-    # Join the second thread, don't exit the program
-    nocs_thread.join()
+    base_bridge.start_bridge()
 
