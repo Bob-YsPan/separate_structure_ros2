@@ -39,7 +39,7 @@ class Profile_params():
     inflation_radius = 0.20  # The nearest distance of the obstacle
     map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
     max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
-    max_angular_vel = 0.4     # Max angular velocity (Orig: 0.75)
+    max_angular_vel = 1.0     # Max angular velocity (Orig: 0.75)
     min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
     min_angular_vel = 0.5    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
