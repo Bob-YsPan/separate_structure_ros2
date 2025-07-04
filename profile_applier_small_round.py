@@ -37,9 +37,13 @@ class Profile_params():
     wheel_thick = 0.025  # Thick of single wheel
     # Navigation parameters
     inflation_radius = 0.20  # The nearest distance of the obstacle
-    map_filename = "250701_S01.yaml"
-    max_linear_vel = 0.3     # Max linear velocity (Orig: 0.4)
-    max_angular_vel = 0.4    # Max angular velocity (Orig: 0.75)
+    map_filename = "250701_S01.yaml"    # Map yaml config filename under navigation folder
+    max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
+    max_angular_vel = 0.4     # Max angular velocity (Orig: 0.75)
+    min_linear_vel = 0.05     # Min linear velocity (Orig: 0.0)
+    min_angular_vel = 0.01    # Min angular velocity (Orig: 0.0)
+    xy_goal_tolerance = 0.1   # Robot position tolerance (Orig: 0.25)
+    yaw_goal_tolerance = 0.5  # Robot facing tolerance (Orig: 0.25)
     # Auto calculated (Don't touch)
     robot_radius = 0.0
     wheel_radius = 0.0
@@ -220,9 +224,19 @@ class Profile_updater():
                     "name": "inflation_radius (local_costmap)"
                 },
                 {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_vel_x'],
+                    "value": self.params.min_linear_vel,
+                    "name": "min_vel_x (FollowPath)"
+                },
+                {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_x'],
                     "value": self.params.max_linear_vel,
                     "name": "max_vel_x (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_xy'],
+                    "value": self.params.min_linear_vel,
+                    "name": "min_speed_xy (FollowPath)"
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_speed_xy'],
@@ -230,9 +244,24 @@ class Profile_updater():
                     "name": "max_speed_xy (FollowPath)"
                 },
                 {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_theta'],
+                    "value": self.params.min_angular_vel,
+                    "name": "min_speed_theta (FollowPath)"
+                },
+                {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_theta'],
                     "value": self.params.max_angular_vel,
                     "name": "max_vel_theta (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'general_goal_checker', 'xy_goal_tolerance'],
+                    "value": self.params.xy_goal_tolerance,
+                    "name": "xy_goal_tolerance (general_goal_checker)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'general_goal_checker', 'yaw_goal_tolerance'],
+                    "value": self.params.yaw_goal_tolerance,
+                    "name": "yaw_goal_tolerance (general_goal_checker)"
                 },
             ]
 
