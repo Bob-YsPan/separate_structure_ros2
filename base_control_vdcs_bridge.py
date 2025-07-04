@@ -67,7 +67,10 @@ class BaseBridge():
     # Function to write speed
     def wrtie_spd(self, vx: float, vrz: float):
         # 反解運動學
-        # Sep = 0.158 Rad = 0.032 vx = 0.03
+        # Sep = 0.158 Rad = 0.032 vx = 0.03 >> WR = WL 大約 0.95
+        # Min WR at linear 0.03: (0.03 + 0.158 / 2.0 * 0) / 0.032 = 0.9375
+        # Min rad: (0 + 0.158 / 2.0 * vrz) / 0.032 = 0.9375
+        # 0.079 * vrz = 0.03, vrz = 0.3797468354 >> 大約抓 0.5 rad/s
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
         # 解算出太小的數值，以最小容許的數值旋轉
