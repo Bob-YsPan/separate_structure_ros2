@@ -37,7 +37,7 @@ class Profile_params():
     wheel_thick = 0.025  # Thick of single wheel
     # Navigation parameters
     inflation_radius = 0.20  # The nearest distance of the obstacle
-    map_filename = "250701_S01.yaml"    # Map yaml config filename under navigation folder
+    map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
     max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
     max_angular_vel = 0.4     # Max angular velocity (Orig: 0.75)
     min_linear_vel = 0.05     # Min linear velocity (Orig: 0.0)
