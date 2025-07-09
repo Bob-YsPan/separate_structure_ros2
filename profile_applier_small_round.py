@@ -275,7 +275,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['velocity_smoother', 'ros__parameters', 'deadband_velocity'],
-                    "value": [self.params.min_linear_vel, 0, self.params.min_angular_vel],
+                    "value": [self.params.min_linear_vel, 0.0, self.params.min_angular_vel],
                     "name": "deadband_velocity (velocity_smoother)"
                 },
             ]
