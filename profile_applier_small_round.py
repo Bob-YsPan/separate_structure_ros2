@@ -40,7 +40,7 @@ class Profile_params():
     map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
     max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
     max_angular_vel = 1.0     # Max angular velocity (Orig: 0.75)
-    min_linear_vel = 0.03     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
+    min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
     min_angular_vel = 0.3    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
     yaw_goal_tolerance = 0.25  # Robot facing tolerance (Orig: 0.25)
@@ -225,7 +225,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_vel_x'],
-                    "value": 0.0,
+                    "value": self.params.min_linear_vel,
                     "name": "min_vel_x (FollowPath)"
                 },
                 {
@@ -235,7 +235,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_xy'],
-                    "value": 0.0,
+                    "value": self.params.min_linear_vel,
                     "name": "min_speed_xy (FollowPath)"
                 },
                 {
@@ -245,7 +245,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_theta'],
-                    "value": 0.0,
+                    "value": self.params.min_angular_vel,
                     "name": "min_speed_theta (FollowPath)"
                 },
                 {
@@ -275,7 +275,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['velocity_smoother', 'ros__parameters', 'deadband_velocity'],
-                    "value": [self.params.min_linear_vel, 0.0, self.params.min_angular_vel],
+                    "value": [0.0, 0.0, 0.0],
                     "name": "deadband_velocity (velocity_smoother)"
                 },
             ]
