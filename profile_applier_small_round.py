@@ -250,7 +250,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_theta'],
-                    "value": 0.0,
+                    "value": self.params.max_angular_vel,
                     "name": "max_vel_theta (FollowPath)"
                 },
                 {
