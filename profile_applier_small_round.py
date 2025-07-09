@@ -40,7 +40,7 @@ class Profile_params():
     map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
     max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
     max_angular_vel = 1.0     # Max angular velocity (Orig: 0.75)
-    min_linear_vel = -0.03     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
+    min_linear_vel = 0.03     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
     min_angular_vel = 0.3    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
     yaw_goal_tolerance = 0.5  # Robot facing tolerance (Orig: 0.25)
@@ -225,7 +225,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_vel_x'],
-                    "value": self.params.min_linear_vel,
+                    "value": 0.0,
                     "name": "min_vel_x (FollowPath)"
                 },
                 {
@@ -235,7 +235,7 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_xy'],
-                    "value": self.params.min_linear_vel,
+                    "value": 0.0,
                     "name": "min_speed_xy (FollowPath)"
                 },
                 {
@@ -245,12 +245,12 @@ class Profile_updater():
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_theta'],
-                    "value": self.params.min_angular_vel,
+                    "value": 0.0,
                     "name": "min_speed_theta (FollowPath)"
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_theta'],
-                    "value": self.params.max_angular_vel,
+                    "value": 0.0,
                     "name": "max_vel_theta (FollowPath)"
                 },
                 {
@@ -262,6 +262,21 @@ class Profile_updater():
                     "path": ['controller_server', 'ros__parameters', 'general_goal_checker', 'yaw_goal_tolerance'],
                     "value": self.params.yaw_goal_tolerance,
                     "name": "yaw_goal_tolerance (general_goal_checker)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'max_velocity'],
+                    "value": [self.params.max_linear_vel, 0.0, self.params.max_angular_vel],
+                    "name": "max_velocity (velocity_smoother)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'min_velocity'],
+                    "value": [self.params.max_linear_vel * -1.0, 0.0, self.params.max_angular_vel * -1.0],
+                    "name": "min_velocity (velocity_smoother)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'deadband_velocity'],
+                    "value": [self.params.min_linear_vel, 0, self.params.min_angular_vel],
+                    "name": "deadband_velocity (velocity_smoother)"
                 },
             ]
 
