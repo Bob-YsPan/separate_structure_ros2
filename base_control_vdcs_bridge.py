@@ -12,7 +12,7 @@ class BaseBridge():
     # Initialize this class
     def __init__(self):
         # minimum threshold (rad/s) for motor rotates
-        self.threshold_wheel = 0.95
+        self.threshold_wheel = 0.45
         # 除錯資料列印
         self.debug_mode = False
         # 接收 buffer
