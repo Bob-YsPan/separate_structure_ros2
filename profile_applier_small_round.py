@@ -43,7 +43,7 @@ class Profile_params():
     min_linear_vel = 0.03     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
     min_angular_vel = 0.3    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
-    yaw_goal_tolerance = 0.5  # Robot facing tolerance (Orig: 0.25)
+    yaw_goal_tolerance = 0.25  # Robot facing tolerance (Orig: 0.25)
     # Auto calculated (Don't touch)
     robot_radius = 0.0
     wheel_radius = 0.0
