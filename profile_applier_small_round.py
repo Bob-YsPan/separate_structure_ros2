@@ -40,8 +40,8 @@ class Profile_params():
     map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
     max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
     max_angular_vel = 1.0     # Max angular velocity (Orig: 0.75)
-    min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
-    min_angular_vel = 0.5    # Min angular velocity (Orig: 0.0)
+    min_linear_vel = -0.03     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
+    min_angular_vel = 0.3    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
     yaw_goal_tolerance = 0.5  # Robot facing tolerance (Orig: 0.25)
     # Auto calculated (Don't touch)

@@ -71,6 +71,10 @@ class BaseBridge():
         # Min WR at linear 0.03: (0.03 + 0.158 / 2.0 * 0) / 0.032 = 0.9375
         # Min rad: (0 + 0.158 / 2.0 * vrz) / 0.032 = 0.9375
         # 0.079 * vrz = 0.03, vrz = 0.3797468354 >> 大約抓 0.5 rad/s
+        # 剛好移動 Min rad = 0.45
+        # 0.45 = (0 + 0.158 / 2.0 * vrz) / 0.032
+        # 0.0144 = 0.079 * vrz
+        # vrz = 0.1822784810 >> 抓 0.3 rad/s
         WR = (vx + self.wheelSep / 2.0 * vrz) / self.wheelRad
         WL = (vx - self.wheelSep / 2.0 * vrz) / self.wheelRad
         # 解算出太小的數值，以最小容許的數值旋轉
