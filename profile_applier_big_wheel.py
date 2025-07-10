@@ -23,8 +23,8 @@ class Profile_params():
     laser_pos_p = 0.0
     laser_pos_yw = 0.0
     # IMU position (Robot body's center --> IMU)
-    imu_pos_x = 0.24 - 0.13
-    imu_pos_y = 0.165 - 0.36
+    imu_pos_x = 0.11
+    imu_pos_y = -0.195
     imu_pos_z = 0.313
     imu_pos_r = 0.0
     imu_pos_p = 0.0
@@ -40,6 +40,10 @@ class Profile_params():
     map_filename = "250703_B02F2.yaml" # Map filename to load
     max_linear_vel = 0.3     # Max linear velocity (Orig: 0.4)
     max_angular_vel = 0.4    # Max angular velocity (Orig: 0.75)
+    min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
+    min_angular_vel = 0.0    # Min angular velocity (Orig: 0.0)
+    xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)
+    yaw_goal_tolerance = 0.25  # Robot facing tolerance (Orig: 0.25)
     # Auto calculated (Don't touch)
     robot_radius = 0.0
     wheel_radius = 0.0
@@ -220,9 +224,19 @@ class Profile_updater():
                     "name": "inflation_radius (local_costmap)"
                 },
                 {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_vel_x'],
+                    "value": self.params.min_linear_vel,
+                    "name": "min_vel_x (FollowPath)"
+                },
+                {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_x'],
                     "value": self.params.max_linear_vel,
                     "name": "max_vel_x (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_xy'],
+                    "value": self.params.min_linear_vel,
+                    "name": "min_speed_xy (FollowPath)"
                 },
                 {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_speed_xy'],
@@ -230,9 +244,39 @@ class Profile_updater():
                     "name": "max_speed_xy (FollowPath)"
                 },
                 {
+                    "path": ['controller_server', 'ros__parameters', 'FollowPath', 'min_speed_theta'],
+                    "value": self.params.min_angular_vel,
+                    "name": "min_speed_theta (FollowPath)"
+                },
+                {
                     "path": ['controller_server', 'ros__parameters', 'FollowPath', 'max_vel_theta'],
                     "value": self.params.max_angular_vel,
                     "name": "max_vel_theta (FollowPath)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'general_goal_checker', 'xy_goal_tolerance'],
+                    "value": self.params.xy_goal_tolerance,
+                    "name": "xy_goal_tolerance (general_goal_checker)"
+                },
+                {
+                    "path": ['controller_server', 'ros__parameters', 'general_goal_checker', 'yaw_goal_tolerance'],
+                    "value": self.params.yaw_goal_tolerance,
+                    "name": "yaw_goal_tolerance (general_goal_checker)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'max_velocity'],
+                    "value": [self.params.max_linear_vel, 0.0, self.params.max_angular_vel],
+                    "name": "max_velocity (velocity_smoother)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'min_velocity'],
+                    "value": [self.params.max_linear_vel * -1.0, 0.0, self.params.max_angular_vel * -1.0],
+                    "name": "min_velocity (velocity_smoother)"
+                },
+                {
+                    "path": ['velocity_smoother', 'ros__parameters', 'deadband_velocity'],
+                    "value": [0.0, 0.0, 0.0],
+                    "name": "deadband_velocity (velocity_smoother)"
                 },
             ]
 
