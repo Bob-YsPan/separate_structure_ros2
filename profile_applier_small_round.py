@@ -21,7 +21,7 @@ class Profile_params():
     laser_pos_z = 0.105
     laser_pos_r = 0.0
     laser_pos_p = 0.0
-    laser_pos_yw = 3.14159
+    laser_pos_yw = 0.0
     # IMU position (Robot body's center --> IMU)
     imu_pos_x = 0.065
     imu_pos_y = -0.055
