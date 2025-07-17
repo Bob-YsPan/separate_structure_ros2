@@ -51,7 +51,7 @@ class Profile_params():
     # 在這裡會計算自動更新的參數的數值
     def __init__(self):
         self.robot_radius = sqrt((self.robot_size_y ^ 2) + (self.robot_size_x ^ 2))
-        self.wheel_radius = self.wheel_diameter / 2
+        self.wheel_radius = self.wheel_diameter / 2.0
         # 當導航PC與感應器模組化後，大部分感應器位置可以透過nocs_pos的部分+感應器在模組參考點的偏移量
 
 # 方便存取 yaml 的 Class
