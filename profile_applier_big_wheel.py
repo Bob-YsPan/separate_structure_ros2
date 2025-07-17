@@ -13,7 +13,7 @@ class Profile_params():
     nocs_pos_p = 0.0
     nocs_pos_y = 0.0
     # Robot size (Robot body's size) (注意：很多參數會依據機器人身體中心為原點計算)
-    robot_size_x = 0.62
+    robot_size_x = 0.92
     robot_size_y = 0.55
     robot_size_z = 0.625
     # Laser position (Robot body's center --> Laser)
