@@ -14,13 +14,13 @@ class BaseBridge():
         # minimum threshold (rad/s) for motor rotates
         self.threshold_wheel = 0.45
         # 除錯資料列印
-        self.debug_mode = False
+        self.debug_mode = True
         # 接收 buffer
         buf = b''
         # 設定串列通訊
         try:
             # Communication parameter
-            self.device_port = '/dev/wheeltec_base'
+            self.device_port = '/dev/ttyACM0'
             self.baudrate = 115200
             # 通訊逾時調整成10ms，以免等待資料卡住整個程式
             self.serial = serial.Serial(self.device_port, self.baudrate, timeout=0.01)
@@ -61,7 +61,7 @@ class BaseBridge():
         self.current_time_nocs = self.current_time_base
         self.previous_time_nocs = self.current_time_base
         # 寫入初始皆為0的訊號
-        self.wrtie_spd(0.0, 0.0)
+        self.write_spd(0.0, 0.0, 0.0)
         # Deque to switch between two thread
         # Put the signal receive from base
         self.base_signal_deque = deque(maxlen=3)
@@ -77,7 +77,7 @@ class BaseBridge():
             checksum ^= byte
         return checksum
     # Function to Transform Datatypes
-    def Odom_Trans(data_high: int, data_low: int) -> float:
+    def Odom_Trans(self, data_high: int, data_low: int) -> float:
         # 仿製 C++ 的 Odom_Trans 函數
         # 將高位元組和低位元組組合成一個有符號的 16 位元整數，然後轉換為浮點數速度。
         transition_16 = (data_high << 8) | data_low
@@ -89,7 +89,7 @@ class BaseBridge():
         data_return = signed_value / 1000.0
         return data_return
     # Function to write speed
-    def wrtie_spd(self, vx: float, vy: float, vrz: float):
+    def write_spd(self, vx: float, vy: float, vrz: float):
         # 模擬將速度轉換為串口發送的位元組陣列
         send_data_bytes = bytearray(11)
         send_data_bytes[0] = self.FRAME_HEADER
@@ -145,25 +145,29 @@ class BaseBridge():
                     cmd_vx = 0.0
                     cmd_vy = 0.0
                     cmd_vrz = 0.0
-                    self.wrtie_spd(cmd_vx, cmd_vy, cmd_vrz)
+                    self.write_spd(cmd_vx, cmd_vy, cmd_vrz)
                     print("[INFO] [BASE] Safe stop!")
                     safestop = True
                 # 沒有命令時，每50ms發送目前速度訊號以確保取得底盤狀態回傳
-                # if(self.current_time_base - self.previous_time_base_pub > 0.05):
-                #     # 再送出一次當前速度
-                #     self.wrtie_spd(cmd_vx, cmd_vrz)
-                #     # Reset timer
-                #     self.previous_time_base_pub = self.current_time_base
+                if(self.current_time_base - self.previous_time_base_pub > 0.05):
+                    # 再送出一次當前速度
+                    self.write_spd(cmd_vx, cmd_vy, cmd_vrz)
+                    # Reset timer
+                    self.previous_time_base_pub = self.current_time_base
             # 接收部分
             # Step 0: Wait data coming
             if(step == 0):
                 # Try to read buffer
                 buf = self.serial.read(1)
                 # Check vaild header
-                if buf == self.FRAME_HEADER:
+                if len(buf) > 0 and ord(buf) == self.FRAME_HEADER:
                     if(self.debug_mode):
                         print("[DEBUG] [BASE] Header vaild!")
                     step = 1
+                else:
+                    if(self.debug_mode):
+                        # print(f"[WARN] [BASE] Wrong Header: {buf}")
+                        pass
             # Step 1: Read remaining data and check footer
             elif(step == 1):
                 buf += self.serial.read(23)
