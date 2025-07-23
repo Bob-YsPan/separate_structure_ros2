@@ -11,16 +11,14 @@ import struct
 class BaseBridge():
     # Initialize this class
     def __init__(self):
-        # minimum threshold (rad/s) for motor rotates
-        self.threshold_wheel = 0.45
         # 除錯資料列印
-        self.debug_mode = True
+        self.debug_mode = False
         # 接收 buffer
         buf = b''
         # 設定串列通訊
         try:
             # Communication parameter
-            self.device_port = '/dev/ttyACM0'
+            self.device_port = '/dev/4wd_base'
             self.baudrate = 115200
             # 通訊逾時調整成10ms，以免等待資料卡住整個程式
             self.serial = serial.Serial(self.device_port, self.baudrate, timeout=0.01)

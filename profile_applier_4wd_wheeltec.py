@@ -2,7 +2,7 @@ import os
 import subprocess
 import xml.etree.ElementTree as ET
 import yaml
-from math import sqrt, pow
+from math import sqrt
 
 class Profile_params():
     # NOCS position (Use in future)
@@ -13,34 +13,34 @@ class Profile_params():
     nocs_pos_p = 0.0
     nocs_pos_y = 0.0
     # Robot size (Robot body's size) (注意：很多參數會依據機器人身體中心為原點計算)
-    robot_size_x = 0.92
-    robot_size_y = 0.55
-    robot_size_z = 0.625
+    robot_size_x = 0.65
+    robot_size_y = 0.65
+    robot_size_z = 0.255
     # Laser position (Robot body's center --> Laser)
-    laser_pos_x = 0.403
+    laser_pos_x = 0.265
     laser_pos_y = 0.0
-    laser_pos_z = 0.293
+    laser_pos_z = 0.14
     laser_pos_r = 0.0
     laser_pos_p = 0.0
     laser_pos_yw = 0.0
     # IMU position (Robot body's center --> IMU)
-    imu_pos_x = 0.11
-    imu_pos_y = -0.195
-    imu_pos_z = 0.313
+    imu_pos_x = 0.225
+    imu_pos_y = 0.0
+    imu_pos_z = 0.163
     imu_pos_r = 0.0
     imu_pos_p = 0.0
     imu_pos_yw = 0.0
     # Wheel description (Robot body's center --> wheels)
-    wheel_pos_x = 0.21  # X distance between wheel shaft and robot center
-    wheel_pos_z = -0.135  # Z distance between wheel shaft and robot center
-    wheel_separate = 0.566  # Distance between two wheels
-    wheel_diameter = 0.352  # Size of the wheels
-    wheel_thick = 0.08  # Thick of single wheel
+    wheel_pos_x = 0.02  # X distance between wheel shaft and robot center
+    wheel_pos_z = -0.02  # Z distance between wheel shaft and robot center
+    wheel_separate = 0.6  # Distance between two wheels
+    wheel_diameter = 0.22  # Size of the wheels
+    wheel_thick = 0.06  # Thick of single wheel
     # Navigation parameters
-    inflation_radius = 0.55  # The nearest distance of the obstacle
-    map_filename = "250703_B02F3.yaml" # Map filename to load
-    max_linear_vel = 0.3     # Max linear velocity (Orig: 0.4)
-    max_angular_vel = 0.4    # Max angular velocity (Orig: 0.75)
+    inflation_radius = 0.65  # The nearest distance of the obstacle
+    map_filename = "250701_S01F1.yaml"    # Map yaml config filename under navigation folder
+    max_linear_vel = 0.3      # Max linear velocity (Orig: 0.4)
+    max_angular_vel = 0.6     # Max angular velocity (Orig: 0.75)
     min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
     min_angular_vel = 0.0    # Min angular velocity (Orig: 0.0)
     xy_goal_tolerance = 0.25   # Robot position tolerance (Orig: 0.25)

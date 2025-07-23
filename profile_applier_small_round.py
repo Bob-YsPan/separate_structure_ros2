@@ -33,7 +33,7 @@ class Profile_params():
     # Wheel description (Robot body's center --> wheels)
     wheel_pos_x = 0.04  # X distance between wheel shaft and robot center
     wheel_pos_z = -0.073  # Z distance between wheel shaft and robot center
-    wheel_separate = 0.079  # Distance between two wheels
+    wheel_separate = 0.158  # Distance between two wheels
     wheel_diameter = 0.064  # Size of the wheels
     wheel_thick = 0.025  # Thick of single wheel
     # Navigation parameters
@@ -48,10 +48,12 @@ class Profile_params():
     # Auto calculated (Don't touch)
     robot_radius = 0.0
     wheel_radius = 0.0
+    wheel_separate_half = 0.0
     # 在這裡會計算自動更新的參數的數值
     def __init__(self):
         self.robot_radius = sqrt(pow(self.robot_size_y, 2) + pow(self.robot_size_x, 2)) / 2.0
         self.wheel_radius = self.wheel_diameter / 2
+        self.wheel_separate_half = self.wheel_separate / 2
         # 當導航PC與感應器模組化後，大部分感應器位置可以透過nocs_pos的部分+感應器在模組參考點的偏移量
 
 # 方便存取 yaml 的 Class
@@ -127,7 +129,7 @@ class Profile_updater():
                 "wheel_radius": self.params.wheel_radius,
                 "wheel_width": self.params.wheel_thick,
                 "wheel_pos_x": self.params.wheel_pos_x,
-                "wheel_pos_y": self.params.wheel_separate,
+                "wheel_pos_y": self.params.wheel_separate_half,
                 "wheel_pos_z": self.params.wheel_pos_z,
             }
             for base_param, new_value in param_value_map.items():
