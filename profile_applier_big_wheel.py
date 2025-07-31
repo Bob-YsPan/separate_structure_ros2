@@ -38,7 +38,7 @@ class Profile_params():
     wheel_thick = 0.08  # Thick of single wheel
     # Navigation parameters
     inflation_radius = 0.55  # The nearest distance of the obstacle
-    map_filename = "250703_B02F3.yaml" # Map filename to load
+    map_filename = "250731_B01.yaml" # Map filename to load
     max_linear_vel = 0.3     # Max linear velocity (Orig: 0.4)
     max_angular_vel = 0.4    # Max angular velocity (Orig: 0.75)
     min_linear_vel = 0.0     # Min linear velocity (Orig: 0.0), keep it 0.0 if you use 2wd or you cannot do the self-rotation!
